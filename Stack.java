@@ -39,11 +39,15 @@ public static String peek(){
 
 public static void main (String[] args){
 Stack test = new Stack();
-push(new Node("12"));
-System.out.println(peek());
-push(new Node("31"));
-push(new Node("21"));
-System.out.println(test);
+test.push(new Node("12"));
+System.out.println(test.peek());
+test.push(new Node("31"));
+test.push(new Node("21"));
+System.out.println(test.peek());
+test.pop();
+test.pop();
+System.out.println(test.peek());
+//System.out.println(test);
 
 }
 }
