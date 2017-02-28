@@ -33,16 +33,26 @@ public void pop (){
   }
 }
 
-public static String peek(){
+public char peek(){
   return top.getValue();
+}
+
+public static void print(){
+	for(Node temp = top; temp != null; temp = temp.getNext()){
+		System.out.println(temp.getValue());		
+	}
 }
 
 public static void main (String[] args){
 Stack test = new Stack();
-test.push(new Node("12"));
+char first = '1';
+char second = '2';
+char third = '3';
+
+test.push(new Node(first));
 System.out.println(test.peek());
-test.push(new Node("31"));
-test.push(new Node("21"));
+test.push(new Node(second));
+test.push(new Node(third));
 System.out.println(test.peek());
 test.pop();
 test.pop();
