@@ -28,17 +28,20 @@ public static StringBuilder convert(String input){
 		if(c != plus && c != minus && c != multi && c != div && c != Lbrac && c != Rbrac){
 			postStr.append(c);
 		}
+		else if(c == Lbrac){
+			holder.push(new Node(c));
+		}
 		else if(c == Rbrac){
 			temp = holder.peek();
 			postStr.append(temp);
+			holder.pop();
 			holder.pop();
 		}
 		else {
 			if(holder.isEmpty() == true){
 				holder.push(new Node(c));
 			}
-			
-			else if(holder.peek() == plus || holder.peek() == minus || holder.peek() == multi || holder.peek() == div){
+			else if(holder.peek() == plus || holder.peek() == minus || holder.peek() == multi || holder.peek() == div||holder.peek() == Lbrac || holder.peek() == Rbrac){
 					if(c == div || c == multi){
 						if(holder.peek() == div || holder.peek() == multi){
 							temp = holder.peek();
@@ -54,12 +57,11 @@ public static StringBuilder convert(String input){
 							holder.pop();
 							holder.push(new Node(c));
 						}
+						if(holder.peek() == Lbrac){
+							holder.push(new Node(c));
+						}
 				}
 			}
-			/*if(c == Lbrac){
-				holder.push(new Node(c));
-			} */
-			
 		}
 	}
 		while(holder.isEmpty() == false){
