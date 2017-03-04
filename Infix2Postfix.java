@@ -22,6 +22,7 @@ public static StringBuilder convert(String input){
 	Character div = '/';
 	Character Lbrac = '(';
 	Character Rbrac = ')';
+	Character space = ' ';
 	char temp;
 	StringBuilder postStr = new StringBuilder();
 	StringBuilder calcStr = new StringBuilder();
@@ -84,50 +85,63 @@ public static StringBuilder convert(String input){
 		holder.pop();
 	}
 		for(int j = 0; j < postStr.length(); j++){
+			if(postStr.charAt(j) != space){
 			calcStr.append(postStr.charAt(j));
+			}
 		}
 		for(int k = 0; k < calcStr.length(); k++){
-			char a = calcStr.charAt(k);
+			Character a = calcStr.charAt(k);
 			if(a == plus || a == minus || a == multi || a == div){
 				if(a == plus){
-					int num1 = calcStk.peek();
+					Character num1 = calcStk.peek();
+					int t1 = Character.getNumericValue(num1);
 					calcStk.pop();
-					int num2 = calcStk.peek();
+					Character num2 = calcStk.peek();
+					int t2 = Character.getNumericValue(num2);
 					calcStk.pop();
-					int result = num2 + num1;
-					calcStk.push(new Node((char) result)); //problem here need way to conver int to char, rn it converts it to ascii 
+					int result = t1 + t2;
+					char t3 = Integer.toString(result).charAt(0);
+					calcStk.push(new Node(t3)); //int.toString().charAt() 
 				}
 				else if(a == minus){
-					int num1 = calcStk.peek();
+					Character num1 = calcStk.peek();
+					int t1 = Character.getNumericValue(num1);
 					calcStk.pop();
-					int num2 = calcStk.peek();
+					Character num2 = calcStk.peek();
+					int t2 = Character.getNumericValue(num2);
 					calcStk.pop();
-					int result = num2 - num1;
-					calcStk.push(new Node((char) result));
+					int result = t2 - t1;
+					char t3 = Integer.toString(result).charAt(0);
+					calcStk.push(new Node(t3));
 				}
 				else if(a == multi){
-					int num1 = calcStk.peek();
+					Character num1 = calcStk.peek();
+					int t1 = Character.getNumericValue(num1);
 					calcStk.pop();
-					int num2 = calcStk.peek();
+					Character num2 = calcStk.peek();
+					int t2 = Character.getNumericValue(num2);
 					calcStk.pop();
-					int result = num2 * num1;
-					calcStk.push(new Node((char) result));
+					int result = t2 * t1;
+					char t3 = Integer.toString(result).charAt(0);
+					calcStk.push(new Node(t3));
 				}
 				else if(a == div){
-					int num1 = calcStk.peek();
+					Character num1 = calcStk.peek();
+					int t1 = Character.getNumericValue(num1);
 					calcStk.pop();
-					int num2 = calcStk.peek();
+					Character num2 = calcStk.peek();
+					int t2 = Character.getNumericValue(num2);
 					calcStk.pop();
-					int result = num2 / num1;
-					calcStk.push(new Node((char) result));
+					int result = t2 / t1;
+					char t3 = Integer.toString(result).charAt(0);
+					calcStk.push(new Node(t3));
 				}
 			} else { // a is a number
 				calcStk.push(new Node(a));
 			}
-			System.out.println(" ");
-			calcStk.print();
-			System.out.println("");
+			
 		}
+		calcStk.print();
 	return postStr;
 }
 
