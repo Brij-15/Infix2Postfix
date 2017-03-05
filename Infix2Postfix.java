@@ -7,7 +7,7 @@ public static void main (String[] args){
 	while(input != "done"){
 	System.out.println("Please enter in expression you want converted :");
 	input = scan.nextLine();
-	System.out.println(convert(input));
+	System.out.println("The postFix notation is " + convert(input));
 	}	
 	scan.close();
 }
@@ -23,9 +23,13 @@ public static StringBuilder convert(String input){
 	Character Lbrac = '(';
 	Character Rbrac = ')';
 	Character space = ' ';
+	Character num1, num2,checkSpace;
+	int t1=0,t2=0,t3;
+	String w1,w2,w3;
 	char temp;
 	StringBuilder postStr = new StringBuilder();
 	StringBuilder calcStr = new StringBuilder();
+	StringBuilder result_ch = new StringBuilder();
 	
 	for(int i = 0; i < input.length(); i++){
 		char c = input.charAt(i);
@@ -84,64 +88,215 @@ public static StringBuilder convert(String input){
 		postStr.append(temp);
 		holder.pop();
 	}
-		for(int j = 0; j < postStr.length(); j++){
-			if(postStr.charAt(j) != space){
+		for(int j = 0; j < postStr.length(); j++){ //calculation starts
+			//if(postStr.charAt(j) != space){
 			calcStr.append(postStr.charAt(j));
-			}
+			//}
 		}
 		for(int k = 0; k < calcStr.length(); k++){
 			Character a = calcStr.charAt(k);
 			if(a == plus || a == minus || a == multi || a == div){
 				if(a == plus){
-					Character num1 = calcStk.peek();
-					int t1 = Character.getNumericValue(num1);
+					num1 = calcStk.peek();
+					if(num1 == space){
+						calcStk.pop();
+						num1 = calcStk.peek();
+					}
 					calcStk.pop();
-					Character num2 = calcStk.peek();
-					int t2 = Character.getNumericValue(num2);
+					if(calcStk.isEmpty() == false){
+					checkSpace = calcStk.peek();
+					if(checkSpace != space){
+						w1 = num1.toString();
+						w2 = checkSpace.toString();
+						t1 = Integer.parseInt(w1);
+						t3 = Integer.parseInt(w2);
+						t3 = t3*10;
+						t1 = t1+t3;
+						calcStk.pop();
+					} else {
+						calcStk.pop();
+						 t1 = Character.getNumericValue(num1);
+					}
+					} 
+					num2 = calcStk.peek();
 					calcStk.pop();
+					if(num2 == space){
+						num2 = calcStk.peek();
+					}
+					if(calcStk.isEmpty() == false){
+					calcStk.pop();
+					checkSpace = calcStk.peek();
+					if(checkSpace != space){
+						w1 = num2.toString();
+						w2 = checkSpace.toString();
+						t2 = Integer.parseInt(w1);
+						t3 = Integer.parseInt(w2);
+						t3 = t3*10;
+						t2 = t2+t3;
+					} 
+					} else {
+						t2 = Character.getNumericValue(num2);
+					}
 					int result = t1 + t2;
-					char t3 = Integer.toString(result).charAt(0);
-					calcStk.push(new Node(t3)); //int.toString().charAt() 
-				}
+					result_ch.append(Integer.toString(result).charAt(0));
+					result_ch.append(Integer.toString(result).charAt(1));
+					
+				}//doneish 
 				else if(a == minus){
-					Character num1 = calcStk.peek();
-					int t1 = Character.getNumericValue(num1);
+					num1 = calcStk.peek();
+					if(num1 == space){
+						calcStk.pop();
+						num1 = calcStk.peek();
+					}
 					calcStk.pop();
-					Character num2 = calcStk.peek();
-					int t2 = Character.getNumericValue(num2);
+					if(calcStk.isEmpty() == false){
+					checkSpace = calcStk.peek();
+					if(checkSpace != space){
+						w1 = num1.toString();
+						w2 = checkSpace.toString();
+						t1 = Integer.parseInt(w1);
+						t3 = Integer.parseInt(w2);
+						t3 = t3*10;
+						t1 = t1+t3;
+						calcStk.pop();
+					} else {
+						calcStk.pop();
+						 t1 = Character.getNumericValue(num1);
+					}
+					} 
+					num2 = calcStk.peek();
+					if(num2 == space){
+						calcStk.pop();
+						num2 = calcStk.peek();
+					}
 					calcStk.pop();
+					if(calcStk.isEmpty() == false){
+					//calcStk.pop();
+					checkSpace = calcStk.peek();
+					if(checkSpace != space){
+						w1 = num2.toString();
+						w2 = checkSpace.toString();
+						t2 = Integer.parseInt(w1);
+						t3 = Integer.parseInt(w2);
+						t3 = t3*10;
+						t2 = t2+t3;
+					} 
+					} else {
+						t2 = Character.getNumericValue(num2);
+					}
 					int result = t2 - t1;
-					char t3 = Integer.toString(result).charAt(0);
-					calcStk.push(new Node(t3));
+					if(result > 9){
+					result_ch.append(Integer.toString(result).charAt(0));
+					result_ch.append(Integer.toString(result).charAt(1));
+					} else {
+						result_ch.append(Integer.toString(result).charAt(0));
+					}
 				}
 				else if(a == multi){
-					Character num1 = calcStk.peek();
-					int t1 = Character.getNumericValue(num1);
+					num1 = calcStk.peek();
+					if(num1 == space){
+						calcStk.pop();
+						num1 = calcStk.peek();
+					}
 					calcStk.pop();
-					Character num2 = calcStk.peek();
-					int t2 = Character.getNumericValue(num2);
+					if(calcStk.isEmpty() == false){
+					checkSpace = calcStk.peek();
+					if(checkSpace != space){
+						w1 = num1.toString();
+						w2 = checkSpace.toString();
+						t1 = Integer.parseInt(w1);
+						t3 = Integer.parseInt(w2);
+						t3 = t3*10;
+						t1 = t1+t3;
+						calcStk.pop();
+					} else {
+						calcStk.pop();
+						 t1 = Character.getNumericValue(num1);
+					}
+					} 
+					num2 = calcStk.peek();
+					if(num2 == space){
+						calcStk.pop();
+						num2 = calcStk.peek();
+					}
 					calcStk.pop();
+					if(calcStk.isEmpty() == false){
+					//calcStk.pop();
+					checkSpace = calcStk.peek();
+					if(checkSpace != space){
+						w1 = num2.toString();
+						w2 = checkSpace.toString();
+						t2 = Integer.parseInt(w1);
+						t3 = Integer.parseInt(w2);
+						t3 = t3*10;
+						t2 = t2+t3;
+					} 
+					} else {
+						t2 = Character.getNumericValue(num2);
+					}
 					int result = t2 * t1;
-					char t3 = Integer.toString(result).charAt(0);
-					calcStk.push(new Node(t3));
+					if(result > 9){
+					result_ch.append(Integer.toString(result).charAt(0));
+					result_ch.append(Integer.toString(result).charAt(1));
+					} else {
+						result_ch.append(Integer.toString(result).charAt(0));
+					}
 				}
 				else if(a == div){
-					Character num1 = calcStk.peek();
-					int t1 = Character.getNumericValue(num1);
+					num1 = calcStk.peek();
+					if(num1 == space){
+						calcStk.pop();
+						num1 = calcStk.peek();
+					}
 					calcStk.pop();
-					Character num2 = calcStk.peek();
-					int t2 = Character.getNumericValue(num2);
+					if(calcStk.isEmpty() == false){
+					checkSpace = calcStk.peek();
+					if(checkSpace != space){
+						w1 = num1.toString();
+						w2 = checkSpace.toString();
+						t1 = Integer.parseInt(w1);
+						t3 = Integer.parseInt(w2);
+						t3 = t3*10;
+						t1 = t1+t3;
+						calcStk.pop();
+					} else {
+						calcStk.pop();
+						 t1 = Character.getNumericValue(num1);
+					}
+					} 
+					num2 = calcStk.peek();
+					if(num2 == space){
+						calcStk.pop();
+						num2 = calcStk.peek();
+					}
+					//calcStk.pop();
+					if(calcStk.isEmpty() == false){
 					calcStk.pop();
+					checkSpace = calcStk.peek();
+					if(checkSpace != space){
+						w1 = num2.toString();
+						w2 = checkSpace.toString();
+						t2 = Integer.parseInt(w1);
+						t3 = Integer.parseInt(w2);
+						t3 = t3*10;
+						t2 = t2+t3;
+					} 
+					} else {
+						t2 = Character.getNumericValue(num2);
+					}
 					int result = t2 / t1;
-					char t3 = Integer.toString(result).charAt(0);
-					calcStk.push(new Node(t3));
+					if(result > 9){
+					result_ch.append(Integer.toString(result).charAt(0));
+					result_ch.append(Integer.toString(result).charAt(1));
+					} else {
+						result_ch.append(Integer.toString(result).charAt(0));
+					}
 				}
 			} else { // a is a number
 				calcStk.push(new Node(a));
 			}
-			
 		}
-		calcStk.print();
+		System.out.println("The answer is "+result_ch);
 	return postStr;
 }
 
